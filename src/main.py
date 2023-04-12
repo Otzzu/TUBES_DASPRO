@@ -11,23 +11,41 @@ from pengumpul import *
 load()
 
 while not var.gameEnd:
-    masukan: str = input(">>> ")
-    if (masukan == "help"):
-        help(var.currentUser[2])
-    elif (masukan == "save"):
-        save()
-    elif (masukan == "exit"):
+    command: str = input(">>> ")
+    if command == "login":
+        login()
+    elif (command == "exit"):
         exitProgram()
-    else:
-        if (var.currentUser[2] == "bandung_bondowoso"):
-            commandBondowoso(masukan)
-        elif (var.currentUser == ("", "", "")):
-            commandNoRole(masukan)
-        elif (var.currentUser[2] == "jin_pengumpul"):
-            commandPengumpul(masukan)
-        elif (var.currentUser[2] == "jin_pembangun"):
-            commandPembangun(masukan)
-        elif (var.currentUser[2] == "roro_jonggrang"):
-            commandJonggrang(masukan)
+    elif (command == "help"):
+        help()
+    elif (command == "logout"):
+        logout()
+    elif (command == "save"):
+        save()
+    elif (command == "summonjin"):
+        summonJin()
+    elif (command == "hapusjin"):
+        hapusJin()
+    elif (command == "ubahjin"):
+        ubahJin()
+    elif (command == "batchkumpul"):
+        batchKumpul()
+    elif (command == "batchbangun"):
+        batchBangun()
+    elif (command == "laporanjin"):
+        laporanJin()
+    elif (command == "laporancandi"):
+        laporanCandi()
+    elif (command == "undo"):
+        undo()
+    elif (command == "hancurkancandi"):
+        hancurkanCandi()
+    elif (command == "ayamberkokok"):
+        ayamBerkokok()
+    elif (command == "bangun"):
+        bangun()
+    elif (command == "kumpul"):
+        kumpul()
+    
     
     

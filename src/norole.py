@@ -4,104 +4,153 @@ from typing import *
 import argparse
 import os
 
-def commandNoRole(command: str) -> None:
-    if command == "login":
-        login()
-    elif (command == "exit"):
-        exitProgram()
-    elif (command == "summonjin"):
-        print("Summon jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "hapusjin"):
-        print("Hapus jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "ubahjin"):
-        print("Ubah jin hanya dapat diakses oleh akun Bandung Bondowoso.")
+# def commandNoRole(command: str) -> None:
+#     if command == "login":
+#         login()
+#     elif (command == "exit"):
+#         exitProgram()
+#     elif (command == "help"):
+#         help()
+#     elif (command == "logout"):
+#         logout()
+#     elif (command == "save"):
+#         save()
 
-def login():
-    username = input("Username: ")
-    password = input("Password: ")
+def logout() -> None:
+    if var.currentUser == ("","",""):
+        print("Logout gagal!")
+        print('Anda belum login dengan username silahkan login terlebih dahulu sebelum melakukan logout.')
+    else :
+        var.currentUser = ("", "", "")
+        print(var.currentUser)
 
-    user = filterArr(var.users, lambda x: x[0] == username)
-    print(user)
-    if user[1] != 0:
-        if password == user[0][0][1]:
-            var.currentUser = user[0][0]
-            print("")
-            print("Selamat datang, " + username + "!")
-            print('Masukkan command "help" untuk daftar command yang dapat kamu panggil.')
+def login() -> None:
+    if var.currentUser != ("","",""):
+        print("Login gagal!")
+        print('Anda telah login dengan username ' + var.currentUser[0] + ', silahkan lakukan "logout" sebelum melakukan login kembali.')
+    else :
+        username = input("Username: ")
+        password = input("Password: ")
+
+        user = filterArr(var.users, lambda x: x[0] == username)
+        print(user)
+        if user[1] != 0:
+            if password == user[0][0][1]:
+                var.currentUser = user[0][0]
+                print("")
+                print("Selamat datang, " + username + "!")
+                print('Masukkan command "help" untuk daftar command yang dapat kamu panggil.')
+            else:
+                print("Password salah!")
         else:
-            print("Password salah!")
-    else:
-        print("Username tidak terdaftar!")
+            print("Username tidak terdaftar!")
 
-def help(role: str = "") -> None:
+def help() -> None:
+    role = var.currentUser[2]
     print("=========== HELP ==========")
     if (role == ""):
         print("1. login")
         print("   Untuk masuk menggunakan akun")
-        print("2. load")
-        print("   Untuk memuat file eksternal ke dalam permainan")
-        print("3. save")
-        print("   Untuk menyimpan data permainan ke dalam sebuah file")
+        print("2. exit")
+        print("   Untuk keluar dari program dan kembali ke terminal")
     elif (role == "bandung_bondowoso"):
         print("1. logout")
         print("   Untuk keluar dari akun yang digunakan sekarang")
         print("2. summonjin")
         print("   Untuk memanggil jin")
-        print("3. summonjin")
+        print("3. hapusjin")
         print("   Untuk menghapus jin")
         print("4. ubahjin")
         print("   Untuk mengubah tipe jin")
-        print("5. save")
+        print("5. batchbangun")
+        print("   Untuk membangun candi dengan semua jin yang dimiliki")
+        print("6. batchkumpul")
+        print("   Untuk mengumpulkan bahan bangunan dengan semua jin yang dimiliki")
+        print("7. laporanjin")
+        print("   Untuk mengeluarkan laporan mengenai jin yang dimiliki")
+        print("8. laporancandi")
+        print("   Untuk mengeluarkan laporan mengenai candi yang telah dibangun")
+        print("9. save")
         print("   Untuk menyimpan data permainan ke dalam sebuah file")
+        print("10. exit")
+        print("   Untuk keluar dari program dan kembali ke terminal")
     elif (role == "roro_jonggrang"):
         print("1. logout")
         print("   Untuk keluar dari akun yang digunakan sekarang")
         print("2. hancurkancandi")
         print("   Untuk menghancurkan candi yang tersedia")
+        print("3. ayamberkokok")
+        print("   Untuk menyelesaikan permainan dan mengecek apakah Bandung Bondowoso menang atau kalah")
+        print("4. save")
+        print("   Untuk menyimpan data permainan ke dalam sebuah file")
+        print("5. exit")
+        print("   Untuk keluar dari program dan kembali ke terminal")
+    elif (role == "jin_pengumpul"):
+        print("1. logout")
+        print("   Untuk keluar dari akun yang digunakan sekarang")
+        print("2. kumpul")
+        print("   Untuk mengumpulkan bahan bangunan")
         print("3. save")
         print("   Untuk menyimpan data permainan ke dalam sebuah file")
-
-
-def save():
-    inputPath: str = input("Masukkan nama folder: ") + "@"
+        print("4. exit")
+        print("   Untuk keluar dari program dan kembali ke terminal")
+    elif (role == "jin_pembangun"):
+        print("1. logout")
+        print("   Untuk keluar dari akun yang digunakan sekarang")
+        print("2. bangun")
+        print("   Untuk membangun candi")
+        print("3. save")
+        print("   Untuk menyimpan data permainan ke dalam sebuah file")
+        print("4. exit")
+        print("   Untuk keluar dari program dan kembali ke terminal")
+    
+def save() -> None:
+    inputPath = input("Masukkan nama folder: ")
     print("")
     
-    path: str = ""
+    path = "save"
+    if not (os.path.isdir(path)):
+        print("Membuat folder " + path + "...")
+        os.makedirs(path)
     
-    i: int = 0
-    word: str = ""
-    while True:
-        if inputPath[i] == "/" or inputPath[i] == "@" :
+    path = path + "/" + inputPath    
+    if not (os.path.isdir(path)):
+        print("Membuat folder " + path + "...")
+        os.makedirs(path)
+    
+    # i: int = 0
+    # word: str = ""
+    # while True:
+    #     if inputPath[i] == "/" or inputPath[i] == "@" :
             
-            if path == "" :
-                path = path + word
-            else :
-                path = path + "/" + word
+    #         if path == "" :
+    #             path = path + word
+    #         else :
+    #             path = path + "/" + word
                 
-            if not (os.path.isdir(path)):
-                print("Membuat folder " + path + "...")
-            word = ""
+    #         if not (os.path.isdir(path)):
+    #             print("Membuat folder " + path + "...")
+    #         word = ""
             
-            if inputPath[i] == "@": break
-        else:
-            word = word + inputPath[i]
-        i = i + 1
+    #         if inputPath[i] == "@": break
+    #     else:
+    #         word = word + inputPath[i]
+    #     i = i + 1       
+    # os.makedirs(path)
         
-    os.makedirs(path)
-        
-    dataUsers: str = ""
+    dataUsers = ""
     for i in range(var.users[1]):
-        dataUser: str = var.users[0][i][0] + ";" + var.users[0][i][1] + ";" +  var.users[0][i][2] + "\n"
+        dataUser = var.users[0][i][0] + ";" + var.users[0][i][1] + ";" +  var.users[0][i][2] + "\n"
         dataUsers = dataUsers + dataUser
         
-    dataCandis: str = ""
+    dataCandis = ""
     for i in range(var.candi[1]):
-        dataCandi: str = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" +  str(var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
+        dataCandi = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" +  str(var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
         dataCandis = dataCandis + dataCandi
 
-    dataBahans: str = ""
+    dataBahans = ""
     for i in range(var.bahanBangunan[1]):
-        dataBahan: str = var.bahanBangunan[0][i][0] + ";" + var.bahanBangunan[0][i][1] + ";" +  str(var.bahanBangunan[0][i][2]) + "\n"
+        dataBahan = var.bahanBangunan[0][i][0] + ";" + var.bahanBangunan[0][i][1] + ";" +  str(var.bahanBangunan[0][i][2]) + "\n"
         dataBahans = dataBahans + dataBahan
     
     writeCSV(path + "/user.csv", dataUsers)
@@ -111,8 +160,9 @@ def save():
     print("")
     print("Saving...")
     print("Berhasil menyimpan data di folder " + path + "!")
+    var.stackUndo = ([], 0)
 
-def load():
+def load() -> None:
     
     parser = argparse.ArgumentParser()
     parser.add_argument("folderPath")
@@ -123,9 +173,10 @@ def load():
     if folderPath == "":
         print("Tidak ada nama folder yang diberikan!")
         print("")
-        print("Usage: python main.py <nam_folder>")
+        print("Usage: python main.py <nama_folder>")
         exit()
     
+    folderPath = "save/" + args.folderPath
     if not os.path.isdir(folderPath):
         print('Folder "' + folderPath + '" tidak ditemukan.' )
         exit()
@@ -143,8 +194,8 @@ def load():
     print(var.candi)
     print(var.bahanBangunan)
     
-def exitProgram():
-    pilihan: str = ""
+def exitProgram() -> None:
+    pilihan = ""
        
     while True:
         pilihan = input("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
@@ -155,7 +206,3 @@ def exitProgram():
         exit()
     elif pilihan == "n" or pilihan == "N":
         exit()
-    
-
-    
-    

@@ -1,69 +1,55 @@
 import var
 from util import *
 from typing import *
-import random
+from norole import *
 
 
-def commandJonggrang(command: str) -> None:
-    if (command == "hancurkancandi"):
-        hancurkanCandi()
-    elif (command == "ayamberkokok"):
-        ayamBerkokok()
-    elif (command == "summonjin"):
-        print("Summon jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "hapusjin"):
-        print("Hapus jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "ubahjin"):
-        print("Ubah jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "batchkumpul"):
-        print("Batch Kumpul hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "batchbangun"):
-        print("Batch Bangun hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "logout"):
-        logout()
-    elif (command == "bangun"):
-        print("bangun hanya dapat diakses oleh akun Jin Pembangun.")
-    elif (command == "kumpul"):
-        print("Kumpul hanya dapat diakses oleh akun Jin Pengumpul.")
-    elif (command == "laporanjin"):
-        print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-    elif (command == "laporancandi"):
-        print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
+# def commandJonggrang(command: str) -> None:
+#     if (command == "hancurkancandi"):
+#         hancurkanCandi()
+#     elif (command == "ayamberkokok"):
+#         ayamBerkokok()
 
 
-def hancurkanCandi():
-    idCandi: int = int(input("Masukkan ID candi: "))
-
-    index: int = getIndex(var.candi, idCandi, lambda x, y: x[0] == y)
-
-    if index != -1:
-        pilihan: str = input(
-            "Apakah anda yakin ingin menghancurkan candi ID: " + str(idCandi) + " (Y/N)?")
-
-        if pilihan == "Y":
-            var.candi = delete(var.candi, idCandi, lambda x, y: x[0] == y)
-            print("")
-            print("Candi telah berhasil dihancurkan.")
+def hancurkanCandi() -> None:
+    if (var.currentUser[2] != "roro_jonggrang"):
+        print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
-        print("Tidak ada candi dengan ID tersebut.")
+        idCandi = int(input("Masukkan ID candi: "))
 
-    print(var.candi)
+        index = getIndex(var.candi, idCandi, lambda x, y: x[0] == y)
+
+        if index != -1:
+            pilihan = input(
+                "Apakah anda yakin ingin menghancurkan candi ID: " + str(idCandi) + " (Y/N)?")
+
+            if pilihan == "Y":
+                var.candi = delete(var.candi, idCandi, lambda x, y: x[0] == y)
+                print("")
+                print("Candi telah berhasil dihancurkan.")
+        else:
+            print("Tidak ada candi dengan ID tersebut.")
+
+        print(var.candi)
 
 
-def ayamBerkokok():
-    jumlahCandi: int = var.candi[1]
-
-    print("Kukuruyuk.. Kukuruyuk..")
-    print("")
-    print("Jumlah Candi: " + str(jumlahCandi))
-    print("")
-
-    if jumlahCandi == 100:
-        print("Yah, Bandung Bondowoso memenangkan permainan!")
+def ayamBerkokok() -> None:
+    if (var.currentUser[2] != "roro_jonggrang"):
+        print("Ayam berkokok hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
-        print("Selamat, Roro Jonggrang memenangkan permainan!")
+        jumlahCandi: int = var.candi[1]
+
+        print("Kukuruyuk.. Kukuruyuk..")
         print("")
-        print("*Bandung Bondowoso angry noise*")
-        print("Roro Jonggrang dikutuk menjadi candi.")
+        print("Jumlah Candi: " + str(jumlahCandi))
+        print("")
 
-    var.gameEnd = True
+        if jumlahCandi == 100:
+            print("Yah, Bandung Bondowoso memenangkan permainan!")
+        else:
+            print("Selamat, Roro Jonggrang memenangkan permainan!")
+            print("")
+            print("*Bandung Bondowoso angry noise*")
+            print("Roro Jonggrang dikutuk menjadi candi.")
+
+        var.gameEnd = True
