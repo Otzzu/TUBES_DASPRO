@@ -90,25 +90,28 @@ def hapusJin() -> None:
             masukan = input(
                 "Apakah anda yakin ingin menghapus jin dengan username " + usernameJin + " (Y/N)? ")
             if (masukan == "Y"):
-                deletedUser = filterArr(var.users, lambda x: x[0] == usernameJin)[0][0]
+                deletedUser = filterArr(
+                    var.users, lambda x: x[0] == usernameJin)[0][0]
                 if deletedUser[2] == "jin_pembangun":
-                    deletedCandi = filterArr(var.candi, lambda x: x[1] == usernameJin)
+                    deletedCandi = filterArr(
+                        var.candi, lambda x: x[1] == usernameJin)
                     dataUndo = (deletedUser, deletedCandi)
                 elif deletedUser[2] == "jin_pengumpul":
                     dataUndo = (deletedUser, [(), 0])
-                    
+
                 var.stackUndo = add(dataUndo, var.stackUndo)
-                
-                var.users = delete(var.users, usernameJin,
-                                   lambda x, y: x[0] == y)
-                var.candi = delete(var.candi, usernameJin,
-                                   lambda x, y: x[1] == y)
+
+                var.users = delete(var.users,
+                                   lambda x: x[0] == usernameJin)
+                var.candi = delete(var.candi,
+                                   lambda x: x[1] == usernameJin)
                 print("Jin telah berhasil dihapus dari alam gaib.")
         else:
             print("Tidak ada jin dengan username tersebut.")
         print(var.users)
         print(var.candi)
         print(var.stackUndo)
+
 
 def undo() -> None:
     if (var.currentUser[2] != "bandung_bondowoso"):
@@ -125,7 +128,8 @@ def undo() -> None:
                 if candis[1] != 0:
                     for i in range(candis[1]):
                         id = generateIdCandi()
-                        candi = (id, candis[0][i][1], candis[0][i][2], candis[0][i][3], candis[0][i][4])
+                        candi = (id, candis[0][i][1], candis[0][i]
+                                 [2], candis[0][i][3], candis[0][i][4])
                         var.candi = add(candi, var.candi)
                 print("Undo berhasil")
         else:
@@ -133,8 +137,6 @@ def undo() -> None:
     print(var.users)
     print(var.candi)
     print(var.stackUndo)
-                    
-            
 
 
 def ubahJin() -> None:
@@ -142,12 +144,12 @@ def ubahJin() -> None:
         print("Ubah jin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
         usernameJin = input("Masukkan username Jin: ")
-        index = getIndex(var.users, usernameJin, lambda x, y: x[0] == y)
+        index = getIndex(var.users, lambda x: x[0] == usernameJin)
         if index != -1:
             jin = var.users[0][index]
             tipeJin = "Pengumpul" if jin[2] == "jin_pengumpul" else "Pembangun"
             masukan = input('Jin ini bertipe "' + tipeJin + '" . Yakin ingin mengubah ke tipe "' +
-                             ("Pengumpul" if tipeJin == "Pembangun" else "Pembangun") + '" (Y/N)? ')
+                            ("Pengumpul" if tipeJin == "Pembangun" else "Pembangun") + '" (Y/N)? ')
             if (masukan == "Y"):
                 var.users[0][index] = (
                     jin[0], jin[1], ("jin_pengumpul" if tipeJin == "Pembangun" else "jin_pembangun"))
@@ -171,7 +173,8 @@ def batchKumpul() -> None:
             sumPasir = 0
             sumBatu = 0
             sumAir = 0
-            print("Mengerahkan " + str(jins[1]) + " jin untuk mengumpulkan bahan.")
+            print("Mengerahkan " + str(jins[1]) +
+                  " jin untuk mengumpulkan bahan.")
             for i in range(jins[1]):
                 pasir = random.randint(0, 5)
                 batu = random.randint(0, 5)
@@ -240,7 +243,8 @@ def batchBangun() -> None:
                     if var.candi[1] < 100:
                         var.candi = add(
                             (idCandi, jins[0][i][0], bahan[i][0], bahan[i][1], bahan[i][2]), var.candi)
-                print("Jin berhasil membangun total " + str(jins[1]) + " candi.")
+                print("Jin berhasil membangun total " +
+                      str(jins[1]) + " candi.")
             else:
                 pasirKurang = sumPasir - var.bahanBangunan[0][0][2]
                 batuKurang = sumBatu - var.bahanBangunan[0][1][2]

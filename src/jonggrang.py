@@ -17,14 +17,14 @@ def hancurkanCandi() -> None:
     else:
         idCandi = int(input("Masukkan ID candi: "))
 
-        index = getIndex(var.candi, idCandi, lambda x, y: x[0] == y)
+        index = getIndex(var.candi, lambda x: x[0] == idCandi)
 
         if index != -1:
             pilihan = input(
                 "Apakah anda yakin ingin menghancurkan candi ID: " + str(idCandi) + " (Y/N)?")
 
-            if pilihan == "Y":
-                var.candi = delete(var.candi, idCandi, lambda x, y: x[0] == y)
+            if pilihan == "Y" or pilihan == "y":
+                var.candi = delete(var.candi, lambda x: x[0] == idCandi)
                 print("")
                 print("Candi telah berhasil dihancurkan.")
         else:

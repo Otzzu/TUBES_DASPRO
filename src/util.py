@@ -3,9 +3,9 @@ from typing import *
 from collections.abc import Callable
 
 
-def getIndex(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], by: str | int, func: Callable[[int, int], bool] | Callable[[str, str], bool]) -> int:
+def getIndex(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], func: Callable[[int], bool] | Callable[[str], bool]) -> int:
     for i in range(0, arr[1]):
-        if func(arr[0][i], by):
+        if func(arr[0][i]):
             return i
 
     return -1
@@ -23,12 +23,12 @@ def add(data: Tuple[str, str, str] | Tuple[int, str, int, int, int] | Tuple[Tupl
     return (temp, arr[1] + 1)
 
 
-def delete(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], by: int | str, func: Callable[[str, str], bool] | Callable[[int, int], bool]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
+def delete(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], func: Callable[[str], bool] | Callable[[int], bool]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
     temp = ["" for i in range(arr[1])]
 
     pengurang: int = 0
     for i in range(0, arr[1]):
-        if func(arr[0][i], by):
+        if func(arr[0][i]):
             pengurang = pengurang + 1
         else:
             temp[i - pengurang] = arr[0][i]
@@ -93,14 +93,14 @@ def readCSV(path: str, tipe: str) -> Tuple[List[Tuple[str, str, str]], int] | Tu
 
     file = open(path, "r")
 
-    line: str = file.readline() + "@"
+    line = file.readline() + "@"
 
     temp = ([], 0)
     while line != "@":
-        i: int = 0
-        data: List[str] = ["" for i in range(panjangSatuData)]
-        indexData: int = 0
-        word: str = ""
+        i = 0
+        data = ["" for i in range(panjangSatuData)]
+        indexData = 0
+        word = ""
         while indexData < panjangSatuData:
             if line[i] == ";" or line[i] == "@" or line[i] == "\n":
                 data[indexData] = word
