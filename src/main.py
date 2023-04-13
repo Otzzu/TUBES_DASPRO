@@ -46,6 +46,8 @@ while not var.gameEnd:
         bangun()
     elif (command == "kumpul"):
         kumpul()
+    else:
+        print("Tidak command tersebut")
     
     
     

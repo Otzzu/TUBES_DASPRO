@@ -140,7 +140,7 @@ def undo() -> None:
 
 
 def ubahJin() -> None:
-    if (var.currentUser[2] != "Bandung Bondowoso"):
+    if (var.currentUser[2] != "bandung_bondowoso"):
         print("Ubah jin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
         usernameJin = input("Masukkan username Jin: ")
@@ -275,28 +275,28 @@ def laporanJin() -> None:
         jinTermalas = "-"
         maxCandi = 0
         minCandi = 0
-        if (totalJinPembangun > 0):
-            jinTerajin = jinPembangun[0][0][0]
-            jinTermalas = jinPembangun[0][0][0]
+        if (totalJin > 0):
+            jinTerajin = var.users[0][0][0]
+            jinTermalas = var.users[0][0][0]
             maxCandi = filterArr(
-                var.candi, lambda x: x[1] == jinPembangun[0][0][0])[1]
+                var.candi, lambda x: x[1] == var.users[0][0][0])[1]
             minCandi = maxCandi
-            for i in range(1, totalJinPembangun):
+            for i in range(1, var.users[1]):
                 banyakCandi = filterArr(
-                    var.candi, lambda x: x[1] == jinPembangun[0][i][0])[1]
+                    var.candi, lambda x: x[1] == var.users[0][i][0])[1]
                 if banyakCandi > maxCandi:
                     maxCandi = banyakCandi
-                    jinTerajin = jinPembangun[0][i][0]
+                    jinTerajin = var.users[0][i][0]
                 elif banyakCandi == maxCandi:
-                    if jinPembangun[0][i][0] < jinTerajin:
-                        jinTerajin = jinPembangun[0][i][0]
+                    if var.users[0][i][0] < jinTerajin:
+                        jinTerajin = var.users[0][i][0]
 
                 if banyakCandi < minCandi:
                     minCandi = banyakCandi
-                    jinTermalas = jinPembangun[0][i][0]
+                    jinTermalas = var.users[0][i][0]
                 elif banyakCandi == minCandi:
-                    if jinPembangun[0][i][0] > jinTermalas:
-                        jinTermalas = jinPembangun[0][i][0]
+                    if var.users[0][i][0] > jinTermalas:
+                        jinTermalas = var.users[0][i][0]
 
         totalPasir = var.bahanBangunan[0][0][2]
         totalBatu = var.bahanBangunan[0][1][2]
