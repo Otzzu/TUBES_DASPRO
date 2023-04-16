@@ -1,3 +1,4 @@
+# file utama di mana program akan berjalan (entry point) 
 from util import *
 import var
 from typing import *
@@ -8,8 +9,10 @@ from jonggrang import *
 from pengumpul import *
 
 
+# menjalankan fungsi load untuk mengambil data dari file csv sebelum game dimulai
 load()
 
+# main loop dari game
 while not var.gameEnd:
     command: str = input(">>> ")
     if command == "login":
@@ -47,7 +50,7 @@ while not var.gameEnd:
     elif (command == "kumpul"):
         kumpul()
     else:
-        print("Tidak command tersebut")
+        print("Tidak ada command tersebut")
     
     
     
