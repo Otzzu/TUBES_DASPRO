@@ -149,27 +149,27 @@ def save() -> None:
     # os.makedirs(path)
     
     # penyusunan data array of user
-    dataUsers = ""
-    for i in range(var.users[1]):
-        dataUser = var.users[0][i][0] + ";" + var.users[0][i][1] + ";" +  var.users[0][i][2] + "\n"
-        dataUsers = dataUsers + dataUser
+    # dataUsers = ""
+    # for i in range(var.users[1]):
+    #     dataUser = var.users[0][i][0] + ";" + var.users[0][i][1] + ";" +  var.users[0][i][2] + "\n"
+    #     dataUsers = dataUsers + dataUser
     
-    # penyusunan data array of candi
-    dataCandis = ""
-    for i in range(var.candi[1]):
-        dataCandi = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" +  str(var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
-        dataCandis = dataCandis + dataCandi
+    # # penyusunan data array of candi
+    # dataCandis = ""
+    # for i in range(var.candi[1]):
+    #     dataCandi = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" +  str(var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
+    #     dataCandis = dataCandis + dataCandi
 
-    # penyusunan data array of bahan
-    dataBahans = ""
-    for i in range(var.bahanBangunan[1]):
-        dataBahan = var.bahanBangunan[0][i][0] + ";" + var.bahanBangunan[0][i][1] + ";" +  str(var.bahanBangunan[0][i][2]) + "\n"
-        dataBahans = dataBahans + dataBahan
+    # # penyusunan data array of bahan
+    # dataBahans = ""
+    # for i in range(var.bahanBangunan[1]):
+    #     dataBahan = var.bahanBangunan[0][i][0] + ";" + var.bahanBangunan[0][i][1] + ";" +  str(var.bahanBangunan[0][i][2]) + "\n"
+    #     dataBahans = dataBahans + dataBahan
     
     # penulisan data ke file CSV
-    writeCSV(path + "/user.csv", dataUsers)
-    writeCSV(path + "/candi.csv", dataCandis)
-    writeCSV(path + "/bahan_bangunan.csv", dataBahans)
+    writeCSV(path + "/user.csv", "user")
+    writeCSV(path + "/candi.csv", "candi")
+    writeCSV(path + "/bahan_bangunan.csv", "bahan")
     
     print("")
     print("Saving...")

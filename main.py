@@ -51,6 +51,3 @@ while not var.gameEnd:
         kumpul()
     else:
         print("Tidak ada command tersebut")
-    
-    
-    

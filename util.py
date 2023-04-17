@@ -157,11 +157,30 @@ def readCSV(path: str, tipe: str) -> Tuple[List[Tuple[str, str, str]], int] | Tu
     print(temp)
     return temp
 
+# def writeCSV(path: str, data: str) -> None:
+#     file = open(path, "w")
+#     file.write(data)
+ 
 # fungsi untuk menuliskan data ke file CSV
 # path: alamat file CSV yang mau dituliskan
-# data: data yang mau dituliskan ke file CSV
-# menghasilkan sebuah file CSV yang sudah berisi suatu data
-def writeCSV(path: str, data: str) -> None:
+# tipe: data apa yang mau dituliskan ke CSV, tipe ada tiga yaitu: user, candi, dan bahan
+def writeCSV(path: str, tipe: str) -> None:
+    data = ""
+    if tipe == "user":
+        # penyusunan data array of user
+        for i in range(var.users[1]):
+            dataUser = var.users[0][i][0] + ";" + var.users[0][i][1] + ";" +  var.users[0][i][2] + "\n"
+            data = data + dataUser
+    elif tipe == "candi":
+        # penyusunan data array of candi
+        for i in range(var.candi[1]):
+            dataCandi = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" +  str(var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
+            data = data + dataCandi
+    elif tipe == "bahan":
+        # penyusunan data array of bahan
+        for i in range(var.bahanBangunan[1]):
+            dataBahan = var.bahanBangunan[0][i][0] + ";" + var.bahanBangunan[0][i][1] + ";" +  str(var.bahanBangunan[0][i][2]) + "\n"
+            data = data + dataBahan
     file = open(path, "w")
     file.write(data)
 
