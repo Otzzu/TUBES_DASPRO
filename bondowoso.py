@@ -43,8 +43,7 @@ def summonJin() -> None:
             # pemilihan role jin yang akan disummon
             roleJin = ""
             while True:
-                noJin = (
-                    input("Masukkan nomor jenis jin yang ingin dipanggil: "))
+                noJin = (input("Masukkan nomor jenis jin yang ingin dipanggil: "))
 
                 if (noJin == "1" or noJin == "2"):
                     break
@@ -161,7 +160,7 @@ def ubahJin() -> None:
             #mengubah tipe jin
             jin = var.users[0][index]
             tipeJin = "Pengumpul" if jin[2] == "jin_pengumpul" else "Pembangun"
-            masukan = input('Jin ini bertipe "' + tipeJin + '" . Yakin ingin mengubah ke tipe "' +
+            masukan = input('Jin ini bertipe "' + tipeJin + '". Yakin ingin mengubah ke tipe "' +
                             ("Pengumpul" if tipeJin == "Pembangun" else "Pembangun") + '" (Y/N)? ')
             if (masukan == "Y"):
                 var.users[0][index] = (
@@ -191,9 +190,9 @@ def batchKumpul() -> None:
                   " jin untuk mengumpulkan bahan.")
             for i in range(jins[1]):
                 # penentuan jumlah bahan yang berhasil dikumpulkan oleh satu orang jin
-                pasir = random.randint(0, 5)
-                batu = random.randint(0, 5)
-                air = random.randint(0, 5)
+                pasir = randomAngka(0, 5)
+                batu = randomAngka(0, 5)
+                air = randomAngka(0, 5)
 
                 sumPasir = sumPasir + pasir
                 sumBatu = sumBatu + batu
@@ -230,9 +229,9 @@ def batchBangun() -> None:
             sumAir = 0
             for i in range(jins[1]):
                 # penentuan jumlah bahan bangunan yang digunakan untuk membangun 1 candi
-                pasir = random.randint(1, 5)
-                batu = random.randint(1, 5)
-                air = random.randint(1, 5)
+                pasir = randomAngka(1, 5)
+                batu = randomAngka(1, 5)
+                air = randomAngka(1, 5)
 
                 bahan[i] = (pasir, batu, air)
 

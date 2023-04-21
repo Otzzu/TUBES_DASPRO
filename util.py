@@ -2,6 +2,8 @@
 import var
 from typing import *
 from collections.abc import Callable
+import time  # untuk dijadikan seed pada lcg
+
 
 # fungsi untuk mendapatkan index dari suatu elemen di dalam array
 # arr: array yang berisi elemen yang mau dicari
@@ -21,16 +23,17 @@ def getIndex(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int,
 # arr: array dimana data akan ditambahkan
 # return: sebuah array yang sudah ditambahkan data baru didalamnya
 def add(data: Tuple[str, str, str] | Tuple[int, str, int, int, int] | Tuple[Tuple[str, str, str], Tuple[List[Tuple[int, str, int, int, int]], int]], arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int] | Tuple[List[Tuple[Tuple[str, str, str], Tuple[List[Tuple[int, str, int, int, int]], int]]], int]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int] | Tuple[List[Tuple[Tuple[str, str, str], Tuple[List[Tuple[int, str, int, int, int]], int]]], int]:
-    temp = ["" for i in range(arr[1] + 1)] # inisialisasi array sementara dengan panjang + 1 dari panjang array arr
+    # inisialisasi array sementara dengan panjang + 1 dari panjang array arr
+    temp = ["" for i in range(arr[1] + 1)]
 
     # penyalinan data pada array arr ke array temp dan penambahan data pada array temp
     for i in range(0, arr[1]+1):
-        if i != arr[1]: 
-            temp[i] = arr[0][i] # penyalinan
+        if i != arr[1]:
+            temp[i] = arr[0][i]  # penyalinan
         else:
-            temp[i] = data # penambahan data
+            temp[i] = data  # penambahan data
 
-    return (temp, arr[1] + 1) # panjang array ditambah 1
+    return (temp, arr[1] + 1)  # panjang array ditambah 1
 
 # fungsi untuk menghapus elemen dalam suatu array berdasarkan kriteria tertentu
 # arr: array yang elemennya mau dihapus
@@ -38,28 +41,35 @@ def add(data: Tuple[str, str, str] | Tuple[int, str, int, int, int] | Tuple[Tupl
 # return: array yang sudah dihapus beberapa elemen didalamnya
 # fungsi ini akan menghapus elemen dalam array ketika fungsi func mengembalikan nilai true
 # fungsi ini bisa menghapus lebih dari satu elemen asalkan elemen tersebut masih memenuhi kriteria yang ditentukan
-def delete(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], func: Callable[[str], bool] | Callable[[int], bool]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
-    temp = ["" for i in range(arr[1])]# inisialisasi array sementara
 
-    pengurang = 0 # banyak elemen yang di hapus dalam array arr
-    
+
+def delete(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], func: Callable[[str], bool] | Callable[[int], bool]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
+    temp = ["" for i in range(arr[1])]  # inisialisasi array sementara
+
+    pengurang = 0  # banyak elemen yang di hapus dalam array arr
+
     # penyalinan dan penggeseran elemen pada array arr ke array temp
     for i in range(0, arr[1]):
         if func(arr[0][i]):
-            pengurang = pengurang + 1 #persiapan penggeseran (penghapusan elemen)
+            # persiapan penggeseran (penghapusan elemen)
+            pengurang = pengurang + 1
         else:
-            temp[i - pengurang] = arr[0][i] # penyalinan
+            temp[i - pengurang] = arr[0][i]  # penyalinan
 
     temp2 = temp
-    temp = [temp2[i] for i in range(arr[1]-pengurang)] # pembuatan array dengan panjang yang sesuai
+    # pembuatan array dengan panjang yang sesuai
+    temp = [temp2[i] for i in range(arr[1]-pengurang)]
 
-    return (temp, arr[1] - pengurang) # panjang array dikurangkan sesuai dengan banyak elemen yang dihapus
+    # panjang array dikurangkan sesuai dengan banyak elemen yang dihapus
+    return (temp, arr[1] - pengurang)
 
 # fungsi ini mengembalikan elemen terakhir pada array stackUndo
 # return: elemen terakhir array stackUndo
+
+
 def getLast() -> Tuple[Tuple[str, str, str], Tuple[List[Tuple[int, str, int, int, int]], int]]:
-    data = var.stackUndo[0][var.stackUndo[1]-1] #pengambilan data terakhir
-    
+    data = var.stackUndo[0][var.stackUndo[1]-1]  # pengambilan data terakhir
+
     # penghapusan data terakhir
     temp = ([var.stackUndo[0][i]
             for i in range(var.stackUndo[1] - 1)], var.stackUndo[1] - 1)
@@ -69,17 +79,19 @@ def getLast() -> Tuple[Tuple[str, str, str], Tuple[List[Tuple[int, str, int, int
 
 # fungsi untuk menentukan id Candi dari candi yang akan dibangun
 # return: id candi, id candi berada pada rentang 1-100
+
+
 def generateIdCandi() -> int:
     idCandi = 1
     while True:
         ada = False
         for i in range(var.candi[1]):
-            if var.candi[0][i][0] == idCandi: #pengecekan id candi sudah ada atau belum
+            if var.candi[0][i][0] == idCandi:  # pengecekan id candi sudah ada atau belum
                 ada = True
                 break
-        if ada: #id candi sudah anda pencarian dilanjutkan
+        if ada:  # id candi sudah anda pencarian dilanjutkan
             idCandi = idCandi + 1
-        else: #id candi belum ada pencarian id selesai
+        else:  # id candi belum ada pencarian id selesai
             break
     return idCandi
 
@@ -87,11 +99,14 @@ def generateIdCandi() -> int:
 # arr: array yang mau difilter isinya
 # func: fungsi untuk menentukan kriteria dari filter yang akan dilakukan, ketika fungsi func mengembalikan false maka suatu elemen akan dihapuskan dari dalam array
 # return: array yang sudah difilter, array ini berisi semua elemen yang memenuhi kriteria yang sudah ditentukan pada fungsi func
-def filterArr(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], func: Callable[[str], bool] | Callable[[int], bool]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
-    temp = ([], 0) # inisialisasi array sementara
+
+
+def filterArr(arr: Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int], func: Callable[[Tuple[str, str, str]], bool] | Callable[[Tuple[int, str, int, int, int]], bool]) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
+    temp = ([], 0)  # inisialisasi array sementara
 
     for i in range(arr[1]):
-        if (func(arr[0][i])):# elemen pada array arr yang memenuhi kriteria akan ditambahkan pada array temp
+        # elemen pada array arr yang memenuhi kriteria akan ditambahkan pada array temp
+        if (func(arr[0][i])):
             temp = add(arr[0][i], temp)
 
     return temp
@@ -115,25 +130,20 @@ def validasiPassword(password: str) -> bool:
 # path: alamat dari file CSV yang mau dibaca
 # tipe: data file CSV apa yang mau dibaca, ada 3 tipe yaitu bahan, candi, dan user
 # return: array yang berisi data dari file CSV yang dibaca
-def readCSV(path: str, tipe: str) -> Tuple[List[Tuple[str, str, str]], int] | Tuple[List[Tuple[int, str, int, int, int]], int]:
-    # pengecekan tipe
-    panjangSatuData = 0
-    if tipe == "user" or tipe == "bahan":
-        panjangSatuData = 3
-    elif tipe == "candi":
-        panjangSatuData = 5
 
-    # pembacaan file
-    file = open(path, "r")
-    line = file.readline() + "@" # membaca 1 baris pada file dan diberi mark
-    temp = ([], 0)
-    while line != "@": # pengecekan mark (akhir file)
+
+def readCSV(path: str) -> None:
+    # pembacaan file user
+    fileUser = open(path + "/user.csv", "r")
+    line = fileUser.readline() + "@"  # membaca 1 baris pada file dan diberi mark
+    while line != "@":  # pengecekan mark (akhir file)
         i = 0
-        data = ["" for i in range(panjangSatuData)]
+        data = ["" for i in range(3)]
         indexData = 0
         word = ""
-        while indexData < panjangSatuData:
-            if line[i] == ";" or line[i] == "@" or line[i] == "\n": #pengecekan mark (akhir baris) dan pengecekan separator
+        while indexData < 3:
+            # pengecekan mark (akhir baris) dan pengecekan separator
+            if line[i] == ";" or line[i] == "@" or line[i] == "\n":
                 data[indexData] = word
                 indexData = indexData + 1
                 word = ""
@@ -141,64 +151,129 @@ def readCSV(path: str, tipe: str) -> Tuple[List[Tuple[str, str, str]], int] | Tu
                 word = word + line[i]
             i = i + 1
 
-        # penyesuaian tipe data
-        if tipe == "bahan":
-            data[2] = int(data[2])
-        elif tipe == "candi":
-            data[0] = int(data[0])
-            data[2] = int(data[2])
-            data[3] = int(data[3])
-            data[4] = int(data[4])
+        var.users = add(tuple(data), var.users)  # memasukan data pada array
 
-        temp = add(tuple(data), temp) # memasukan data pada array
-        
-        line = file.readline() + "@" # membaca 1 baris pada file dan diberi mark
+        line = fileUser.readline() + "@"  # membaca 1 baris pada file dan diberi mark
 
-    print(temp)
-    return temp
+    # pembacaan file candi
+    fileCandi = open(path + "/candi.csv", "r")
+    line = fileCandi.readline() + "@"  # membaca 1 baris pada file dan diberi mark
+    while line != "@":  # pengecekan mark (akhir file)
+        i = 0
+        data = ["" for i in range(5)]
+        indexData = 0
+        word = ""
+        while indexData < 5:
+            # pengecekan mark (akhir baris) dan pengecekan separator
+            if line[i] == ";" or line[i] == "@" or line[i] == "\n":
+                if indexData == 1:
+                    data[indexData] = word
+                else:
+                    data[indexData] = int(word)
+                indexData = indexData + 1
+                word = ""
+            else:
+                word = word + line[i]
+            i = i + 1
+
+        var.candi = add(tuple(data), var.candi)  # memasukan data pada array
+
+        line = fileCandi.readline() + "@"  # membaca 1 baris pada file dan diberi mark
+    
+     # pembacaan file bahan bangunan
+    fileBahan = open(path + "/bahan_bangunan.csv", "r")
+    line = fileBahan.readline() + "@"  # membaca 1 baris pada file dan diberi mark
+    while line != "@":  # pengecekan mark (akhir file)
+        i = 0
+        data = ["" for i in range(3)]
+        indexData = 0
+        word = ""
+        while indexData < 3:
+            # pengecekan mark (akhir baris) dan pengecekan separator
+            if line[i] == ";" or line[i] == "@" or line[i] == "\n":
+                if indexData == 2:
+                    data[indexData] = int(word)
+                else:
+                    data[indexData] = word
+                indexData = indexData + 1
+                word = ""
+            else:
+                word = word + line[i]
+            i = i + 1
+
+        var.bahanBangunan = add(tuple(data), var.bahanBangunan)  # memasukan data pada array
+
+        line = fileBahan.readline() + "@"  # membaca 1 baris pada file dan diberi mark
+    
+    fileUser.close()
+    fileCandi.close()
+    fileBahan.close()
+    print(var.users)
+    print(var.candi)
+    print(var.bahanBangunan)
 
 # def writeCSV(path: str, data: str) -> None:
 #     file = open(path, "w")
 #     file.write(data)
- 
+
 # fungsi untuk menuliskan data ke file CSV
 # path: alamat file CSV yang mau dituliskan
 # tipe: data apa yang mau dituliskan ke CSV, tipe ada tiga yaitu: user, candi, dan bahan
-def writeCSV(path: str, tipe: str) -> None:
-    data = ""
-    if tipe == "user":
-        # penyusunan data array of user
-        for i in range(var.users[1]):
-            dataUser = var.users[0][i][0] + ";" + var.users[0][i][1] + ";" +  var.users[0][i][2] + "\n"
-            data = data + dataUser
-    elif tipe == "candi":
-        # penyusunan data array of candi
-        for i in range(var.candi[1]):
-            dataCandi = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" +  str(var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
-            data = data + dataCandi
-    elif tipe == "bahan":
-        # penyusunan data array of bahan
-        for i in range(var.bahanBangunan[1]):
-            dataBahan = var.bahanBangunan[0][i][0] + ";" + var.bahanBangunan[0][i][1] + ";" +  str(var.bahanBangunan[0][i][2]) + "\n"
-            data = data + dataBahan
-    file = open(path, "w")
-    file.write(data)
+
+
+def writeCSV(path: str) -> None:
+    dataUsers = ""
+    dataCandis = ""
+    dataBahans = ""
+    
+    # penyusunan data array of user
+    for i in range(var.users[1]):
+        dataUser = var.users[0][i][0] + ";" + \
+            var.users[0][i][1] + ";" + var.users[0][i][2] + "\n"
+        dataUsers = dataUsers + dataUser
+    # penyusunan data array of candi
+    for i in range(var.candi[1]):
+        dataCandi = str(var.candi[0][i][0]) + ";" + var.candi[0][i][1] + ";" + str(
+            var.candi[0][i][2]) + ";" + str(var.candi[0][i][3]) + ";" + str(var.candi[0][i][4]) + "\n"
+        dataCandis = dataCandis + dataCandi
+    # penyusunan data array of bahan
+    for i in range(var.bahanBangunan[1]):
+        dataBahan = var.bahanBangunan[0][i][0] + ";" + \
+            var.bahanBangunan[0][i][1] + ";" + \
+            str(var.bahanBangunan[0][i][2]) + "\n"
+        dataBahans = dataBahans + dataBahan
+        
+    fileUser = open(path + "/user.csv", "w")
+    fileCandi = open(path + "/candi.csv", "w")
+    fileBahan = open(path + "/bahan_bangunan.csv", "w")
+    fileUser.write(dataUsers)
+    fileCandi.write(dataCandis)
+    fileBahan.write(dataBahans)
+    fileUser.close()
+    fileCandi.close()
+    fileBahan.close()
 
 # fungsi Linear Congruential Generator untuk membantu menghasilkan bilangan acak
+
+
 def lcg(modulus: int, a: int, b: int, seed: int) -> Generator[int, None, None]:
     while True:
-        seed = (a * seed + b) % modulus # rumus lcg
-        yield seed / (modulus) # dibagi modulus mengembalikan hasil pada rentang [0,1]
+        seed = (a * seed + b) % modulus  # rumus lcg
+        # dibagi modulus mengembalikan hasil pada rentang [0,1]
+        yield seed / (modulus)
 
 
-x = lcg(2**31, 1103515245, 12345, 123)
+x = lcg(2**31, 1103515245, 12345, time.time())
 
 # fungsi untuk mengenerate random int pada suatu rentang
 # min: batas bawah random integer (inklusif)
 # max: batas atas random integer (inklusif)
 # return: sebuah random integer di antara min dan max
+
+
 def randomAngka(min: int, max: int) -> int:
-    return int(next(x) * ((max+1)-min) + min) # menyesuaikan dengan batas yang ditentukan
+    # menyesuaikan dengan batas yang ditentukan
+    return int(next(x) * ((max+1)-min) + min)
 
 # def readCSVUser(url: str):
 #     file = open(url, "r")

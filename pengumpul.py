@@ -14,9 +14,9 @@ def kumpul() -> None:
         print("Kumpul hanya dapat diakses oleh akun Jin Pengumpul.")
     else:
         # penentuan jumlah bahan yang dikumpulkan oleh satu jin
-        pasir = random.randint(0, 5)
-        batu = random.randint(0, 5)
-        air = random.randint(0, 5)
+        pasir = randomAngka(0, 5)
+        batu = randomAngka(0, 5)
+        air = randomAngka(0, 5)
 
         print("Jin menemukan " + str(pasir) + " pasir, " + str(batu) + " batu, dan " + str(air) + " air.")
         

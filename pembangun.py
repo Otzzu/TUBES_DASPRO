@@ -16,9 +16,9 @@ def bangun() -> None:
         print("Bangun hanya dapat diakses oleh akun Jin Pembangun.")
     else:
         # penentuan jumlah bahan bangunan yang digunakan untuk membangun 1 candi
-        pasir = random.randint(1, 5)
-        batu = random.randint(1, 5)
-        air = random.randint(1, 5)
+        pasir = randomAngka(1, 5)
+        batu = randomAngka(1, 5)
+        air = randomAngka(1, 5)
 
         # pengecekan apakah bahan bangunan yang dimiliki cukup atau tidak
         cukup: bool = True
